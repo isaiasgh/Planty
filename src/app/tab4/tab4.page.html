@@ -11,11 +11,13 @@
     </ion-toolbar>
   </ion-header>
 
-  <app-explore-container name="Tab 4 page"></app-explore-container> -->
+  <app-explore-container name="Tab 4 page"></app-explore-container> 
+  [routerLink]="['/tabs/tab5', planta.id]"
+  -->
 
   <div *ngIf="plantas.length > 0; else noPlantas">
     <ion-list>
-      <ion-item *ngFor="let planta of plantas" [routerLink]="['/tabs/tab5', planta.id]">
+      <ion-item *ngFor="let planta of plantas" >
         <ion-thumbnail slot="start">
           <img [src]="planta.imagen" alt="Imagen de {{planta.nombre}}" />
         </ion-thumbnail>
@@ -23,6 +25,12 @@
           <h2>{{ planta.nombre }}</h2>
           <p>{{ planta.nombreCientifico }}</p>
         </ion-label>
+        <ion-button color="success" slot="end" [routerLink]="['/tabs/tab5', planta.id]">
+          Más Información
+        </ion-button>
+        <ion-button color="danger" slot="end" (click)="eliminarPlanta(planta.id)">
+          Eliminar
+        </ion-button>
       </ion-item>
     </ion-list>
   </div>
