@@ -12,12 +12,9 @@
       <img src="https://placehold.co/200x200" alt="Logo de la app">
     </ion-col>
   </ion-row>
-
-  <ion-content class="ion-padding">
     <ion-row class="ion-justify-content-center">
       <ion-col size="sm">
         <ion-button (click)="myPlantsRedirect()">
-
           Mis Plantas (Vista 2)
         </ion-button>
       </ion-col>
@@ -37,7 +34,10 @@
         </ion-button>
       </ion-col>
     </ion-row>
-
-  </ion-content>
+    <ion-fab  slot="fixed" vertical="bottom" horizontal="end">
+      <ion-fab-button>
+        <ion-icon name="camera"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
 
 </ion-content>

@@ -8,16 +8,18 @@ import { PLANTAS } from '../elements/plants';
   styleUrls: ['tab2.page.scss'],
   standalone: false,
 })
-export class Tab2Page implements OnInit{
+export class Tab2Page implements OnInit {
   plantas = PLANTAS;
 
   ngOnInit() { }
 
   constructor(private router: Router) { }
 
-  verDetalle(id: number) {
-    this.router.navigate(['/tab5', id]).catch(error => {
+  redirectDetail(id: number) {
+    this.router.navigate(['tabs/tab5', id]).catch(error => {
       console.error('Error al navegar:', error);
     });
+
   }
+
 }

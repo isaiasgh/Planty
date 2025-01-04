@@ -7,7 +7,7 @@
 <ion-content [fullscreen]="true">
   <div *ngIf="plantas.length > 0">
     <ion-list>
-      <ion-item *ngFor="let planta of plantas" >
+      <ion-item *ngFor="let planta of plantas" (click)="redirectDetail(planta.id)" >
         <ion-thumbnail slot="start">
           <img [src]="planta.imagen" alt="Imagen de {{planta.nombre}}" />
         </ion-thumbnail>
@@ -15,9 +15,6 @@
           <h2>{{ planta.nombre }}</h2>
           <p>{{ planta.nombreCientifico }}</p>
         </ion-label>
-        <ion-button color="success" slot="end" [routerLink]="['/tabs/tab5', planta.id]">
-          Más Información
-        </ion-button>
       </ion-item>
     </ion-list>
   </div>
