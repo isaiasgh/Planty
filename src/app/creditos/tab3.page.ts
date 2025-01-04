@@ -7,7 +7,9 @@ import { Component } from '@angular/core';
   standalone: false,
 })
 export class Tab3Page {
-
   constructor() {}
 
+  openUrl(url: string): void {
+    window.open(url, '_blank');
+  }
 }
