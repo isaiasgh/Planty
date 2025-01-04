@@ -1,17 +1,24 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      Tab 2
-    </ion-title>
+    <ion-title>Catálogo</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 2</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <app-explore-container name="Tab 2 page"></app-explore-container>
+  <div *ngIf="plantas.length > 0">
+    <ion-list>
+      <ion-item *ngFor="let planta of plantas" >
+        <ion-thumbnail slot="start">
+          <img [src]="planta.imagen" alt="Imagen de {{planta.nombre}}" />
+        </ion-thumbnail>
+        <ion-label>
+          <h2>{{ planta.nombre }}</h2>
+          <p>{{ planta.nombreCientifico }}</p>
+        </ion-label>
+        <ion-button color="success" slot="end" [routerLink]="['/tabs/tab5', planta.id]">
+          Más Información
+        </ion-button>
+      </ion-item>
+    </ion-list>
+  </div>
 </ion-content>

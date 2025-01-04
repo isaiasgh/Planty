@@ -1,13 +1,23 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
+import { Router } from '@angular/router';
+import { PLANTAS } from '../elements/plants';
 @Component({
   selector: 'app-tab2',
   templateUrl: 'tab2.page.html',
   styleUrls: ['tab2.page.scss'],
   standalone: false,
 })
-export class Tab2Page {
+export class Tab2Page implements OnInit{
+  plantas = PLANTAS;
 
-  constructor() {}
+  ngOnInit() { }
 
+  constructor(private router: Router) { }
+
+  verDetalle(id: number) {
+    this.router.navigate(['/tab5', id]).catch(error => {
+      console.error('Error al navegar:', error);
+    });
+  }
 }
