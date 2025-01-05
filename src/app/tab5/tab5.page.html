@@ -5,34 +5,30 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" *ngIf="planta">
-  <!--<ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 5</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <app-explore-container name="Tab 5 page"></app-explore-container> -->
-
   <ion-card>
     <ion-card-header>
       <ion-card-title>{{ planta.nombre }}</ion-card-title>
       <ion-card-subtitle>{{ planta.nombreCientifico }}</ion-card-subtitle>
     </ion-card-header>
+
     <ion-card-content>
-      <ion-grid>
-        <ion-row class="ion-align-items-center">
-          <ion-col *ngFor="let foto of planta.fotos" size="auto">
-            <img [src]="foto" style="width: 100%; margin-right: 10px;" />
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-      <p>Temperatura ideal: {{ planta.temperaturaIdeal }}</p>
-      <p>Frecuencia de riego: {{ planta.frecuenciaRiego }}</p>
-      <p>Tipo: {{ planta.tipo }}</p>
+      <ion-img [src]="planta.imagen" alt="{{ planta.nombre }}"></ion-img>
+      
       <p>Categoría: {{ planta.categoria }}</p>
-      <p>Espacio mínimo: {{ planta.espacioMinimo }}</p>
-      <ion-textarea readonly>{{ planta.descripcion }}</ion-textarea>
       <a [href]="planta.link" target="_blank">Más información</a>
+
+      <ion-card-header>
+        <ion-card-title>Preguntas frecuentes</ion-card-title>
+      </ion-card-header>
+
+      <ion-list>
+        <ion-item *ngFor="let faq of faqs">
+          <ion-label>
+            <h2>{{ faq.question }}</h2>
+            <p>{{ faq.answer }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
     </ion-card-content>
   </ion-card>
 </ion-content>

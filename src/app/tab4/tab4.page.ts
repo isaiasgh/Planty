@@ -29,7 +29,7 @@ export class Tab4Page implements OnInit {
         quality: 90,
         allowEditing: false,
         resultType: CameraResultType.Uri,
-        source: CameraSource.Camera, // Usa la cámara directamente
+        source: CameraSource.Camera,
       });
 
       console.log('Foto tomada:', image.webPath);
@@ -39,14 +39,9 @@ export class Tab4Page implements OnInit {
         nombre: 'Nueva Planta',
         nombreCientifico: 'Nombre científico',
         imagen: image.webPath || '',
-        temperaturaIdeal: 'Desconocida',
-        frecuenciaRiego: 'Desconocida',
-        tipo: 'Desconocido',
         categoria: 'Desconocida',
-        espacioMinimo: 'Desconocido',
-        descripcion: 'Nueva descripción de planta',
         link: '',
-        fotos: [image.webPath || ''],
+        preguntasFrecuentes: [],
       });
     } catch (error) {
       console.error('Error al tomar foto:', error);
@@ -56,7 +51,7 @@ export class Tab4Page implements OnInit {
   eliminarPlanta(id: number) {
     const index = this.plantas.findIndex((planta) => planta.id === id);
     if (index !== -1) {
-      this.plantas.splice(index, 1); // Elimina la planta del arreglo
+      this.plantas.splice(index, 1);
       console.log(`Planta con ID ${id} eliminada.`);
     } else {
       console.error('Error: No se pudo encontrar la planta para eliminar.');
