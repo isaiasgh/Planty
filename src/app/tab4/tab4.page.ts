@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { PLANTAS } from '../elements/plants';
 
 @Component({
@@ -21,8 +22,35 @@ export class Tab4Page implements OnInit {
     });
   }
 
-  tomarFoto() {
+  async tomarFoto() {
     console.log('Función para tomar foto no implementada.');
+    try {
+      const image = await Camera.getPhoto({
+        quality: 90,
+        allowEditing: false,
+        resultType: CameraResultType.Uri,
+        source: CameraSource.Camera, // Usa la cámara directamente
+      });
+
+      console.log('Foto tomada:', image.webPath);
+
+      this.plantas.push({
+        id: this.plantas.length + 1,
+        nombre: 'Nueva Planta',
+        nombreCientifico: 'Nombre científico',
+        imagen: image.webPath || '',
+        temperaturaIdeal: 'Desconocida',
+        frecuenciaRiego: 'Desconocida',
+        tipo: 'Desconocido',
+        categoria: 'Desconocida',
+        espacioMinimo: 'Desconocido',
+        descripcion: 'Nueva descripción de planta',
+        link: '',
+        fotos: [image.webPath || ''],
+      });
+    } catch (error) {
+      console.error('Error al tomar foto:', error);
+    }
   }
 
   eliminarPlanta(id: number) {
