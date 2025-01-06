@@ -25,20 +25,35 @@ export class Tab4Page implements OnInit {
   async tomarFoto() {
     console.log('Función para tomar foto no implementada.');
     try {
-      const image = await Camera.getPhoto({
+      let image;
+      if (this.isMobile()) {
+        image = await Camera.getPhoto({
+          quality: 90,
+          allowEditing: false,
+          resultType: CameraResultType.Uri,
+          source: CameraSource.Camera,
+        });
+        console.log('Foto tomada desde móvil:', image.webPath);
+        image = image.webPath as string;
+        
+      } else {
+        image = await this.tomarFotoWeb();
+        console.log('Foto tomada desde webcam:', image);
+      }
+      /*const image = await Camera.getPhoto({
         quality: 90,
         allowEditing: false,
         resultType: CameraResultType.Uri,
         source: CameraSource.Camera,
       });
 
-      console.log('Foto tomada:', image.webPath);
+      console.log('Foto tomada:', image.webPath);*/
 
       this.plantas.push({
         id: this.plantas.length + 1,
         nombre: 'Nueva Planta',
         nombreCientifico: 'Nombre científico',
-        imagen: image.webPath || '',
+        imagen: image || '',
         categoria: 'Desconocida',
         link: '',
         preguntasFrecuentes: [],
@@ -56,6 +71,38 @@ export class Tab4Page implements OnInit {
     } else {
       console.error('Error: No se pudo encontrar la planta para eliminar.');
     }
+  }
+
+  private isMobile(): boolean {
+    return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  }
+
+  private async tomarFotoWeb(): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const video = document.createElement('video');
+      const canvas = document.createElement('canvas');
+      const context = canvas.getContext('2d');
+
+      navigator.mediaDevices.getUserMedia({ video: true })
+        .then(stream => {
+          video.srcObject = stream;
+          video.play();
+
+          // Esperamos que el video cargue
+          video.onloadedmetadata = () => {
+            // Hacemos la captura de la imagen
+            setTimeout(() => {
+              canvas.width = video.videoWidth;
+              canvas.height = video.videoHeight;
+              context?.drawImage(video, 0, 0, canvas.width, canvas.height);
+              const imageUrl = canvas.toDataURL('image/png');  // URL de la imagen tomada
+              stream.getTracks().forEach(track => track.stop()); // Detenemos el flujo de la cámara
+              resolve(imageUrl);  // Devolvemos la imagen como base64
+            }, 1000);
+          };
+        })
+        .catch(error => reject('Error al acceder a la cámara web: ' + error));
+    });
   }
 
 }
