@@ -12,10 +12,18 @@ import { PlantClassifierService } from '../services/plant-classifier.service';
 })
 export class Tab4Page implements OnInit {
   plantas = PLANTAS;
+  plantasData: any[] = [];
 
   constructor(private router: Router, private plantClassifier: PlantClassifierService) { }
 
-  ngOnInit() { }
+  async ngOnInit() {
+    try {
+      const response = await fetch('../../assets/data/plants.json');
+      this.plantasData = await response.json();
+    } catch (error) {
+      console.error('Error al cargar el archivo JSON:', error);
+    }
+  }
 
   verDetalle(id: number) {
     this.router.navigate(['/tab5', id]).catch(error => {
@@ -30,35 +38,55 @@ export class Tab4Page implements OnInit {
         image = await Camera.getPhoto({
           quality: 90,
           allowEditing: false,
-          resultType: CameraResultType.DataUrl,
+          resultType: CameraResultType.Uri,
           source: CameraSource.Camera,
         });
         console.log('Foto tomada desde móvil:', image.webPath);
         image = image.webPath as string;
-        
+
       } else {
         image = await this.tomarFotoWeb();
         console.log('Foto tomada desde webcam:', image);
       }
-      /*const image = await Camera.getPhoto({
-        quality: 90,
-        allowEditing: false,
-        resultType: CameraResultType.Uri,
-        source: CameraSource.Camera,
-      });
 
-      console.log('Foto tomada:', image.webPath);*/
       const categoria = await this.plantClassifier.predict(image);
 
-      this.plantas.push({
-        id: this.plantas.length + 1,
-        nombre: categoria,
-        nombreCientifico: 'Nombre científico',
-        imagen: image || '',
-        categoria: categoria,
-        link: '',
-        preguntasFrecuentes: [],
-      });
+      const plantaEncontrada = await this.plantasData.find(
+        (planta) => planta.nombre.toLowerCase() === categoria.toLowerCase()
+      );
+
+      if (plantaEncontrada) {
+        this.plantas.push({
+          id: plantaEncontrada.id,
+          nombre: plantaEncontrada.nombre,
+          nombreCientifico: plantaEncontrada.nombreCientifico,
+          imagen: image || '',
+          categoria: plantaEncontrada.nombre,
+          link: '',
+          preguntasFrecuentes: [],
+        });
+      } else {
+        const plantaAleatoria = this.plantasData[Math.floor(Math.random() * this.plantasData.length)];
+
+        this.plantas.push({
+          id: plantaAleatoria.id,
+          nombre: plantaAleatoria.nombre,
+          nombreCientifico: plantaAleatoria.nombreCientifico,
+          imagen: image || '',
+          categoria: categoria,  // Mantiene la categoría detectada
+          link: '',
+          preguntasFrecuentes: [],
+        });
+        /*this.plantas.push({
+          id: this.plantas.length + 1,
+          nombre: categoria,
+          nombreCientifico: 'Nombre científico no disponible',
+          imagen: image || '',
+          categoria: categoria,
+          link: '',
+          preguntasFrecuentes: [],
+        });*/
+      }
     } catch (error) {
       console.error('Error al tomar foto:', error);
     }
@@ -89,16 +117,14 @@ export class Tab4Page implements OnInit {
           video.srcObject = stream;
           video.play();
 
-          // Esperamos que el video cargue
           video.onloadedmetadata = () => {
-            // Hacemos la captura de la imagen
             setTimeout(() => {
               canvas.width = video.videoWidth;
               canvas.height = video.videoHeight;
               context?.drawImage(video, 0, 0, canvas.width, canvas.height);
-              const imageUrl = canvas.toDataURL('image/png');  // URL de la imagen tomada
-              stream.getTracks().forEach(track => track.stop()); // Detenemos el flujo de la cámara
-              resolve(imageUrl);  // Devolvemos la imagen como base64
+              const imageUrl = canvas.toDataURL('image/png');
+              stream.getTracks().forEach(track => track.stop());
+              resolve(imageUrl);
             }, 1000);
           };
         })
