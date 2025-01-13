@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { PLANTAS } from '../elements/plants';
+import { PlantClassifierService } from '../services/plant-classifier.service';
 
 @Component({
   selector: 'app-tab4',
@@ -12,7 +13,7 @@ import { PLANTAS } from '../elements/plants';
 export class Tab4Page implements OnInit {
   plantas = PLANTAS;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private plantClassifier: PlantClassifierService) { }
 
   ngOnInit() { }
 
@@ -23,14 +24,13 @@ export class Tab4Page implements OnInit {
   }
 
   async tomarFoto() {
-    console.log('Función para tomar foto no implementada.');
     try {
       let image;
       if (this.isMobile()) {
         image = await Camera.getPhoto({
           quality: 90,
           allowEditing: false,
-          resultType: CameraResultType.Uri,
+          resultType: CameraResultType.DataUrl,
           source: CameraSource.Camera,
         });
         console.log('Foto tomada desde móvil:', image.webPath);
@@ -48,13 +48,14 @@ export class Tab4Page implements OnInit {
       });
 
       console.log('Foto tomada:', image.webPath);*/
+      const categoria = await this.plantClassifier.predict(image);
 
       this.plantas.push({
         id: this.plantas.length + 1,
-        nombre: 'Nueva Planta',
+        nombre: categoria,
         nombreCientifico: 'Nombre científico',
         imagen: image || '',
-        categoria: 'Desconocida',
+        categoria: categoria,
         link: '',
         preguntasFrecuentes: [],
       });
