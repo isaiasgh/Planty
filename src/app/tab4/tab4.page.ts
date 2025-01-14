@@ -51,8 +51,26 @@ export class Tab4Page implements OnInit {
 
       const categoria = await this.plantClassifier.predict(image);
 
+      let categoriaIngles = '';
+
+      if (categoria.toLowerCase() === 'girasol') {
+        categoriaIngles = 'sunflower';
+      } else if (categoria.toLowerCase() === 'rosa') {
+        categoriaIngles = 'rose';
+      } else if (categoria.toLowerCase() === 'tulipan') {
+        categoriaIngles = 'tulip';
+      } else if (categoria.toLowerCase() === 'cactus') {
+        categoriaIngles = 'cactus';
+      } else if (categoria.toLowerCase() === 'manzanilla') {
+        categoriaIngles = 'chamomile';
+      } else if (categoria.toLowerCase() === 'orquideas') {
+        categoriaIngles = 'orchid';
+      } else {
+        categoriaIngles = categoria.toLowerCase();
+      }
+
       const plantaEncontrada = await this.plantasData.find(
-        (planta) => planta.nombre.toLowerCase() === categoria.toLowerCase()
+        (planta) => planta.nombre.toLowerCase() === categoriaIngles.toLowerCase()
       );
 
       if (plantaEncontrada) {
@@ -73,7 +91,7 @@ export class Tab4Page implements OnInit {
           nombre: plantaAleatoria.nombre,
           nombreCientifico: plantaAleatoria.nombreCientifico,
           imagen: image || '',
-          categoria: categoria,  // Mantiene la categoría detectada
+          categoria: categoria,
           link: '',
           preguntasFrecuentes: [],
         });
