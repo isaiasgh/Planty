@@ -5,9 +5,9 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <div *ngIf="plantas.length > 0; else noPlantas">
+  <div *ngIf="photoService.plantas.length > 0; else noPlantas">
     <ion-list>
-      <ion-item *ngFor="let planta of plantas" >
+      <ion-item *ngFor="let planta of photoService.plantas" >
         <ion-thumbnail slot="start">
           <img [src]="planta.imagen" alt="Imagen de {{planta.nombre}}" />
         </ion-thumbnail>
