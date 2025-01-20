@@ -24,7 +24,9 @@ export class Tab4Page implements OnInit {
       console.error('Error al cargar el archivo JSON:', error);
     }
   }
-
+  goToPlantDetail(id: number) {
+    this.router.navigate(['/tabs/tab5', id]);  // Redirige a la página de detalles de la planta
+  }
   verDetalle(id: number) {
     this.router.navigate(['/tab5', id]).catch(error => {
       console.error('Error al navegar:', error);
@@ -35,7 +37,8 @@ export class Tab4Page implements OnInit {
     await this.photoService.detectarPlantaFoto();
   }
 
-  eliminarPlanta(id: number) {
+  eliminarPlanta(event: Event, id: number) {
+    event.stopPropagation();  
     this.photoService.eliminarPlanta(id)
   }
 

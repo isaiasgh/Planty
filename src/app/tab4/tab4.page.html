@@ -1,30 +1,46 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
+    
     <ion-title>Mis Plantas</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <div *ngIf="photoService.plantas.length > 0; else noPlantas">
-    <ion-list>
-      <ion-item *ngFor="let planta of photoService.plantas" >
-        <ion-thumbnail slot="start">
-          <img [src]="planta.imagen" alt="Imagen de {{planta.nombre}}" />
-        </ion-thumbnail>
-        <ion-label>
-          <h2>{{ planta.nombre }}</h2>
-          <p>{{ planta.nombreCientifico }}</p>
-        </ion-label>
-        <ion-button color="success" slot="end" [routerLink]="['/tabs/tab5', planta.id]">
-          Más Información
-        </ion-button>
-        <ion-button color="danger" slot="end" (click)="eliminarPlanta(planta.id)">
-          Eliminar
-        </ion-button>
-      </ion-item>
-    </ion-list>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="6" size-md="4" *ngFor="let planta of photoService.plantas">
+          <!-- Card para cada planta -->
+          <ion-card (click)="goToPlantDetail(planta.id)">
+            <!-- Imagen de la planta -->
+            <ion-card-header>
+              <ion-card-title>{{ planta.nombre }}</ion-card-title>
+              <ion-card-subtitle>{{ planta.nombreCientifico }}</ion-card-subtitle>
+            </ion-card-header>
+            <ion-card-content>
+              <ion-img [src]="planta.imagen" alt="Imagen de {{planta.nombre}}"></ion-img>
+            </ion-card-content>
+            <!-- Botón de eliminar con ícono de basura -->
+            <ion-icon name="trash" class="delete-icon" (click)="eliminarPlanta($event, planta.id)"></ion-icon>
+          </ion-card>
+        </ion-col>
+        <ion-col size="6" size-md="4">
+          <ion-card class="scan-card" (click)="tomarFoto()">
+            <ion-card-content class="scan-card-content">
+              <ion-icon name="add-circle" class="scan-icon"></ion-icon>
+              <p class="scan-text">Escanear</p>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </div>
   <ng-template #noPlantas>
-    <ion-button expand="block" (click)="tomarFoto()">Tomar foto de una planta</ion-button>
+    <ion-card class="scan-card" (click)="tomarFoto()">
+      <ion-card-content class="scan-card-content">
+        <ion-icon name="add-circle" class="scan-icon"></ion-icon>
+        <p class="scan-text">Escanear</p>
+      </ion-card-content>
+    </ion-card>
   </ng-template>
 </ion-content>

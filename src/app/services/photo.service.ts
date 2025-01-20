@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
 import { Filesystem, Directory } from '@capacitor/filesystem';
 import { Preferences } from '@capacitor/preferences';
@@ -8,11 +9,11 @@ import { PLANTAS } from '../elements/plants';
 @Injectable({
   providedIn: 'root'
 })
-export class PhotoService  {
+export class PhotoService {
   plantas = PLANTAS;
   plantasData: any[] = [];
 
-  constructor(private plantClassifier: PlantClassifierService) { }
+  constructor(private plantClassifier: PlantClassifierService,  private router: Router) { }
   async detectarPlantaFoto() {
     try {
       let image;
@@ -34,53 +35,40 @@ export class PhotoService  {
       const categoria = await this.plantClassifier.predict(image);
 
       let categoriaIngles = '';
-
+      let plantaId = 1824;
       if (categoria.toLowerCase() === 'girasol') {
         categoriaIngles = 'sunflower';
+        plantaId = 3384;
       } else if (categoria.toLowerCase() === 'rosa') {
         categoriaIngles = 'rose';
+        plantaId = 1530;
       } else if (categoria.toLowerCase() === 'tulipan') {
         categoriaIngles = 'tulip';
+        plantaId = 2269;
       } else if (categoria.toLowerCase() === 'cactus') {
         categoriaIngles = 'cactus';
+        plantaId = 8902;
       } else if (categoria.toLowerCase() === 'manzanilla') {
         categoriaIngles = 'chamomile';
+        plantaId = 1824;
       } else if (categoria.toLowerCase() === 'orquideas') {
         categoriaIngles = 'orchid';
-      } else {
-        categoriaIngles = categoria.toLowerCase();
+        plantaId = 1299;
       }
-      console.log("THIS IS PLANTAS DATA", this.plantasData)
       const plantaEncontrada = await this.plantasData.find(
-        (planta) => planta.nombre.toLowerCase() === categoriaIngles.toLowerCase()
+        (planta) => planta.id === plantaId
       );
+      this.plantas.push({
+        id: plantaEncontrada.id,
+        nombre: plantaEncontrada.nombre,
+        nombreCientifico: plantaEncontrada.nombreCientifico,
+        imagen: image || '',
+        categoria: plantaEncontrada.nombre,
+        link: '',
+        preguntasFrecuentes: [],
+      });
 
-      if (plantaEncontrada) {
-        this.plantas.push({
-          id: plantaEncontrada.id,
-          nombre: plantaEncontrada.nombre,
-          nombreCientifico: plantaEncontrada.nombreCientifico,
-          imagen: image || '',
-          categoria: plantaEncontrada.nombre,
-          link: '',
-          preguntasFrecuentes: [],
-        });
-      } else {
-        
-        const plantaAleatoria = this.plantasData[Math.floor(Math.random() * this.plantasData.length)];
-
-        this.plantas.push({
-          id: plantaAleatoria.id,
-          nombre: plantaAleatoria.nombre,
-          nombreCientifico: plantaAleatoria.nombreCientifico,
-          imagen: image || '',
-          categoria: categoria,
-          link: '',
-          preguntasFrecuentes: [],
-        });
-
-      }
-
+      this.router.navigate(['/tabs/tab5', plantaId]); 
       return [image, categoria, categoriaIngles]
     }
     catch (error) {

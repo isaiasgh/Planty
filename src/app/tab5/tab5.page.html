@@ -1,5 +1,8 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
     <ion-title>{{ planta.nombre }}</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -12,7 +15,7 @@
     </ion-card-header>
 
     <ion-card-content>
-      <ion-img [src]="planta.imagen" alt="{{ planta.nombre }}"></ion-img>
+      <ion-img [src]="planta.imagen" alt="{{ planta.nombre }}" class="plant-img"></ion-img>
       
       <p>Categoría: {{ planta.categoria }}</p>
       <a [href]="planta.link" target="_blank">Más información</a>

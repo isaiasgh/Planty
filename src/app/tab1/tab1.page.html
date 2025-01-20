@@ -1,43 +1,29 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Home
+      PlantyApp
     </ion-title>
   </ion-toolbar>
 </ion-header>
-
 <ion-content [fullscreen]="true" class="ion-padding">
+  
+  <!-- Logo en la parte superior -->
   <ion-row class="ion-justify-content-center">
-    <ion-col size="sm">
-      <img src="https://placehold.co/200x200" alt="Logo de la app">
+    <ion-col size="sm" class="logo-container">
+      <img src="../../assets/images/planty-logo.png" class="logo" alt="Logo de la app">
     </ion-col>
   </ion-row>
-    <ion-row class="ion-justify-content-center">
-      <ion-col size="sm">
-        <ion-button (click)="myPlantsRedirect()">
-          Mis Plantas (Vista 2)
-        </ion-button>
-      </ion-col>
-    </ion-row>
-    <ion-row class="ion-justify-content-center">
-      <ion-col size="sm">
-        <ion-button (click)="catalogueRedirect()">
-          Catálogo (Vista 3)
-        </ion-button>
-      </ion-col>
-    </ion-row>
-    <ion-row class="ion-justify-content-center">
-      <ion-col size="sm">
-        <ion-button (click)="creditsRedirect()">
 
-          Créditos (Vista 5)
-        </ion-button>
-      </ion-col>
-    </ion-row>
-    <ion-fab  slot="fixed" vertical="bottom" horizontal="end">
-      <ion-fab-button (click)="tomarFoto()">
-        <ion-icon name="camera"></ion-icon>
-      </ion-fab-button>
-    </ion-fab>
+  <!-- Botón flotante de la cámara centrado en la pantalla -->
+  <ion-fab slot="fixed" vertical="bottom" horizontal="center" class="fab-container">
+    <ion-fab-button (click)="tomarFoto()">
+      <ion-icon name="camera"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <!-- Texto debajo del botón flotante -->
+  <div class="scan-text">
+    <p>¡Escanea y aprende sobre tus plantas!</p>
+  </div>
 
 </ion-content>

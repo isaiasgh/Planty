@@ -7789,7 +7789,7 @@
   },
   {
     "id": 1299,
-    "nombre": "Chinese ground orchid",
+    "nombre": "Orquidea",
     "nombreCientifico": "Bletilla striata",
     "imagen": "https://two.perenual.com/storage/species_image/1299_bletilla_striata/thumbnail/46779845065_57a4c9f61d_b.jpg"
   },
@@ -9175,7 +9175,7 @@
   },
   {
     "id": 1530,
-    "nombre": "camellia",
+    "nombre": "Rosa",
     "nombreCientifico": "Camellia japonica 'April Rose'",
     "imagen": "https://two.perenual.com/storage/species_image/1530_camellia_japonica_april_rose/thumbnail/52456500562_32f0b718f8_b.jpg"
   },
@@ -10939,9 +10939,9 @@
   },
   {
     "id": 1824,
-    "nombre": "chamomile",
+    "nombre": "Manzanilla",
     "nombreCientifico": "Chamaemelum nobile",
-    "imagen": "assets/placeholder.png"
+    "imagen": "assets/placeholder/chamomile.jpg"
   },
   {
     "id": 1825,
@@ -13609,7 +13609,7 @@
   },
   {
     "id": 2269,
-    "nombre": "Siam tulip",
+    "nombre": "Tulipan",
     "nombreCientifico": "Curcuma alismatifolia 'Pink'",
     "imagen": "https://two.perenual.com/storage/species_image/2269_curcuma_alismatifolia_pink/thumbnail/14756807415_eb959c5b10_b.jpg"
   },
@@ -20299,9 +20299,9 @@
   },
   {
     "id": 3384,
-    "nombre": "common sunflower",
+    "nombre": "Girasol",
     "nombreCientifico": "Helianthus annuus",
-    "imagen": "https://two.perenual.com/storage/image/upgrade_access.jpg"
+    "imagen": "assets/placeholder/sunflower.jpg"
   },
   {
     "id": 3385,
@@ -21058,5 +21058,12 @@
     "nombre": "daylily",
     "nombreCientifico": "Hemerocallis 'Eye Yi Yi'",
     "imagen": "https://two.perenual.com/storage/image/upgrade_access.jpg"
+  },
+  
+  {
+    "id": 8902,
+    "nombre": "Cactus",
+    "nombreCientifico": "Echinocactus grusonii",
+    "imagen": "https://perenual.com/storage/species_image/8551_echinocactus_grusonii/og/52623515667_8855ba17de_b.jpg"
   }
 ]
